@@ -12,19 +12,20 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    private void Update()
+    private void FixedUpdate()  // Using FixedUpdate for better physics behavior
     {
         // Get input from the player
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
         // Calculate movement direction based on input
-        Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput).normalized;
+        Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput);
 
-        // Apply movement to the Rigidbody
-        rb.velocity = movement * moveSpeed;
+        // Convert movement direction to world space, aligned to the player's orientation
+        movement = transform.TransformDirection(movement);
+        movement *= moveSpeed;
 
-        // Optionally, you can restrict vertical movement (e.g., jumping) by uncommenting the next line
-        // rb.velocity = new Vector3(movement.x * moveSpeed, rb.velocity.y, movement.z * moveSpeed);
+        // Apply movement while preserving any existing y-axis velocity (e.g., from jumping or gravity)
+        rb.velocity = new Vector3(movement.x, rb.velocity.y, movement.z);
     }
 }
