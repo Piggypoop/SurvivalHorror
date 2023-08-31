@@ -3,14 +3,19 @@ using UnityEngine;
 public class SimpleHighlight : MonoBehaviour
 {
     public Material highlightMaterial;
-    private Material originalMaterial;
-    private Renderer objectRenderer;
+    private GameObject highlightObject;
     public Camera camera;
+    public bool ishighlight = false;
 
     private void Start()
     {
-        objectRenderer = GetComponent<Renderer>();
-        originalMaterial = objectRenderer.material;
+        // Create the highlight object as a slightly scaled version of the original object
+        highlightObject = Instantiate(gameObject, gameObject.transform.position, gameObject.transform.rotation, gameObject.transform);
+        highlightObject.transform.localScale *= 2f;
+        highlightObject.GetComponent<Renderer>().material = highlightMaterial;
+
+        // Disable it by default
+        highlightObject.SetActive(false);
     }
 
     private void Update()
@@ -20,29 +25,26 @@ public class SimpleHighlight : MonoBehaviour
             Debug.LogWarning("Camera not set.");
             return;
         }
-        
+
         Ray ray = camera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        
+
         if (Physics.Raycast(ray, out hit))
         {
-            Debug.Log("Hit something: " + hit.collider.gameObject.name);
-            
             if (hit.collider.gameObject == gameObject)
             {
-                Debug.Log("Hit the target object");
-                objectRenderer.material = highlightMaterial;
+                ishighlight = true;
             }
             else
             {
-                objectRenderer.material = originalMaterial;
+                ishighlight = false;
             }
         }
         else
         {
-            Debug.Log("Didn't hit anything");
-            objectRenderer.material = originalMaterial;
+            ishighlight = false;
         }
-    }
 
+        highlightObject.SetActive(ishighlight);
+    }
 }
