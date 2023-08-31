@@ -355,6 +355,7 @@
 "Assets/DoorController.cs"
 "Assets/PlayerCameraController.cs"
 "Assets/PlayerControlMovement.cs"
+"Assets/PlayerInteract.cs"
 -langversion:9.0
 
 /deterministic

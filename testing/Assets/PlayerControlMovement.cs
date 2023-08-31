@@ -4,28 +4,25 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed = 5f; // Adjust this value to control movement speed
-    private Rigidbody rb;
-
+    private CharacterController cc;
+    public float moveSpeed;
+    public float jumpSpeed;
+    private Vector3 dir;
+    private float horizontalMove, verticalMove;
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        cc = GetComponent<CharacterController>();
     }
 
     private void FixedUpdate()  // Using FixedUpdate for better physics behavior
     {
         // Get input from the player
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
+        float horizontalMove = Input.GetAxis("Horizontal") * moveSpeed;
+        float verticalMove = Input.GetAxis("Vertical") * moveSpeed;
 
         // Calculate movement direction based on input
-        Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput);
+        dir = transform.forward * verticalMove + transform.right * horizontalMove;
+        cc.Move(dir * Time.deltaTime);
 
-        // Convert movement direction to world space, aligned to the player's orientation
-        movement = transform.TransformDirection(movement);
-        movement *= moveSpeed;
-
-        // Apply movement while preserving any existing y-axis velocity (e.g., from jumping or gravity)
-        rb.velocity = new Vector3(movement.x, rb.velocity.y, movement.z);
     }
 }
