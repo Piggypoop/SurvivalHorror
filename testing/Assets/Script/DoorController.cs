@@ -30,8 +30,10 @@ public class CombinedDoorController : MonoBehaviour, Interactable
     // Interact interface
     public void Interact()
     {
-        OpenDoor();
-        dialog.SendMesasge(text[0]);
+        if (locked && !isOpen)
+        {
+            dialog.SendMesasge(text[0], gameObject);
+        }   
     }
 
     // Dcotor call this function

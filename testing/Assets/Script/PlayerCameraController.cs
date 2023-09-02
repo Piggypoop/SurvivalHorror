@@ -19,7 +19,7 @@ public class PlayerCameraController : MonoBehaviour
 
     private void Update()
     {
-        if (DialogSystem.ON)
+        if (DialogSystem.ON || GameController.isInteracting)
         {
             return;
         }

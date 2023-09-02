@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()  // Using FixedUpdate for better physics behavior
     {
-        if (DialogSystem.ON)
+        if (DialogSystem.ON || GameController.isInteracting)
         {
             return;
         }

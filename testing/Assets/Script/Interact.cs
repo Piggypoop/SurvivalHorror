@@ -5,4 +5,10 @@ using UnityEngine;
 public interface Interactable
 {
     void Interact();
+
+    // Optional method
+    void Pickup()
+    {
+
+    }
 }

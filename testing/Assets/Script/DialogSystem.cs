@@ -14,6 +14,7 @@ public class DialogSystem : MonoBehaviour
     private TextMeshProUGUI dialogText;
     private TextMeshProUGUI dialogTitle;
 
+    private GameObject interactIteam;
     private bool finished = true;
     private bool isTyping = true;
     private int index = 0;
@@ -43,9 +44,10 @@ public class DialogSystem : MonoBehaviour
     }
 
     // Call this function to chat
-    public void SendMesasge(List<string> text)
+    public void SendMesasge(List<string> text, GameObject item)
     {
         if (ON) {throw new KeyNotFoundException();}
+        interactIteam = item;
         index = 0;
         ON = true;
         isTyping = false;
@@ -80,29 +82,34 @@ public class DialogSystem : MonoBehaviour
         }
         ON = false;
         Canvas.SetActive(false);
+        interactIteam.GetComponent<Interactable>().Pickup();
     }
 
     IEnumerator printline(string line)
     {
         string[] tmp = line.Trim().Split("<title>");
         dialogTitle.text = tmp[0];
-        var text = tmp[1];
+        string text = tmp[1];
         dialogText.text = "";
-        int index = 0;
+        float second = 0;
+        int i = 0;
 
-        while (isTyping && index < text.Length - 1)
+        while (isTyping && i < text.Length)
         {
-            dialogText.text += text[index];
-            index++;
-            if (text[index] == ' ')
+            second += Time.deltaTime;
+            if (second > textSpeed)
             {
-                continue;
+                dialogText.text += text[i];
+                if (text[i] != ' ')
+                {
+                    second = 0;
+                }
+                i++;
             }
-            yield return new WaitForSeconds(textSpeed);
+            yield return null;
         }
 
-        isTyping = false;
         dialogText.text = text;
-        yield return 0;
+        isTyping = false;
     }
 }
