@@ -337,6 +337,7 @@
 "Assets/Script/DoctorMovement.cs"
 "Assets/Script/DoorController.cs"
 "Assets/Script/Drug.cs"
+"Assets/Script/GameOverScreen.cs"
 "Assets/Script/Interact.cs"
 "Assets/Script/InventoryItem.cs"
 "Assets/Script/InventorySystem.cs"

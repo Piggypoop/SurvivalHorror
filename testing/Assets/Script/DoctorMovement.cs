@@ -18,10 +18,14 @@ public class MoveAndRotate : MonoBehaviour, Interactable
     private int count = 0;
 
     private Animator animator;
+
+    public GameOverScreen GameOverScreen;
+    int maxPlatform = 0;
     private void Start()
     {
         animator = GetComponent<Animator>();
         StartCoroutine(ActivateAfterDelay());
+        GameOverScreen.gameObject.SetActive(false);
         dialog = GameObject.Find("UI").GetComponent<DialogSystem>();
         text = DialogSystem.GetTextFromFile(textFile);
         drug = GameObject.Find("Drug").GetComponent<Drug>();
@@ -30,8 +34,9 @@ public class MoveAndRotate : MonoBehaviour, Interactable
 
     IEnumerator ActivateAfterDelay()
     {
-        // Wait for 20 seconds before activating the NPC.
+        // Wait for 4 seconds before activating the NPC.
         yield return new WaitForSeconds(4.0f);
+        //给动画设置一个bool 检测到true才会开始动画
         animator.SetBool("StartAnimation", true);
         StartCoroutine(Activate());
     }
@@ -81,6 +86,7 @@ public class MoveAndRotate : MonoBehaviour, Interactable
             else
             {
                 dialog.SendMesasge(text[2], gameObject);
+                GameOverScreen.Setup(maxPlatform);
             }
         }
     }
