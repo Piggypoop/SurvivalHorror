@@ -6,30 +6,39 @@ public class MoveAndRotate : MonoBehaviour, Interactable
 {
     public Vector3 targetPosition;
     public float speed = 1.0f;
-    public float rotationSpeed = 360.0f; // Degrees per second
+    public float rotationSpeed = 360.0f;
     private bool hasReachedTarget = false;
 
     public TextAsset textFile;
-
     private List<List<string>> text;
     private DialogSystem dialog;
 
-    // Drug
     private Drug drug;
     private int stage = 0;
     private int count = 0;
 
+    private Animator animator;
     private void Start()
     {
-        StartCoroutine(active());
+        animator = GetComponent<Animator>();
+        StartCoroutine(ActivateAfterDelay());
         dialog = GameObject.Find("UI").GetComponent<DialogSystem>();
         text = DialogSystem.GetTextFromFile(textFile);
         drug = GameObject.Find("Drug").GetComponent<Drug>();
     }
+    
 
-    IEnumerator active()
+    IEnumerator ActivateAfterDelay()
     {
-        // Move to door
+        // Wait for 20 seconds before activating the NPC.
+        yield return new WaitForSeconds(4.0f);
+        animator.SetBool("StartAnimation", true);
+        StartCoroutine(Activate());
+    }
+
+    IEnumerator Activate()
+    {
+        // Move to target position
         while (Vector3.Distance(transform.position, targetPosition) > 0.1f)
         {
             float step = speed * Time.deltaTime;
@@ -38,11 +47,11 @@ public class MoveAndRotate : MonoBehaviour, Interactable
         }
 
         // Rotate 90 degrees around the Y axis
-        float traget = 90.0f;
-        while (traget > 0.1f)
+        float targetAngle = 90.0f;
+        while (targetAngle > 0.1f)
         {
             float rotationStep = rotationSpeed * Time.deltaTime;
-            traget -= rotationSpeed * Time.deltaTime;
+            targetAngle -= rotationStep;
             transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, 0), rotationStep);
             yield return null;
         }
@@ -57,7 +66,7 @@ public class MoveAndRotate : MonoBehaviour, Interactable
             dialog.SendMesasge(text[0], gameObject);
             drug.eatable = true;
             stage = 1;
-        } 
+        }
         else
         {
             if (drug == null)
@@ -74,6 +83,5 @@ public class MoveAndRotate : MonoBehaviour, Interactable
                 dialog.SendMesasge(text[2], gameObject);
             }
         }
-        
     }
 }
