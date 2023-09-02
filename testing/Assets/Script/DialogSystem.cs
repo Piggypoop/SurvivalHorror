@@ -8,7 +8,7 @@ public class DialogSystem : MonoBehaviour
 {
     // Lock player movement
     public static bool ON = false;
-    public float textSpeed = 0.3f;
+    private float textSpeed = 0.03f;
 
     public GameObject Canvas;
     private TextMeshProUGUI dialogText;

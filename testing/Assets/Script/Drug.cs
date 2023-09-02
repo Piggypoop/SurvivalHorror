@@ -5,13 +5,11 @@ using UnityEngine;
 public class Drug : MonoBehaviour, Interactable
 {
     public TextAsset textFile;
+    public Sprite image;
+    public bool eatable = false;
 
     private List<List<string>> text;
     private DialogSystem dialog;
-
-    public bool eatable = false;
-
-    public Sprite image;
 
     void Start()
     {

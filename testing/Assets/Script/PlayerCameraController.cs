@@ -9,7 +9,7 @@ public class PlayerCameraController : MonoBehaviour
     public float sensitivityY = 2.0f;
     private float rotationX = 0.0f;
 
-    public float interactDistance = 3.0f;
+    public float interactDistance = 2.0f;
 
     private void Start()
     {

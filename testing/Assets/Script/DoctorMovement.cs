@@ -16,6 +16,8 @@ public class MoveAndRotate : MonoBehaviour, Interactable
 
     // Drug
     private Drug drug;
+    private int stage = 0;
+    private int count = 0;
 
     private void Start()
     {
@@ -50,7 +52,28 @@ public class MoveAndRotate : MonoBehaviour, Interactable
 
     public void Interact()
     {
-        dialog.SendMesasge(text[0], gameObject);
-        drug.eatable = true;
+        if (stage == 0)
+        {
+            dialog.SendMesasge(text[0], gameObject);
+            drug.eatable = true;
+            stage = 1;
+        } 
+        else
+        {
+            if (drug == null)
+            {
+                dialog.SendMesasge(text[3], gameObject);
+            }
+            else if (count < 3)
+            {
+                dialog.SendMesasge(text[1], gameObject);
+                count += 1;
+            }
+            else
+            {
+                dialog.SendMesasge(text[2], gameObject);
+            }
+        }
+        
     }
 }

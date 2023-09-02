@@ -17,6 +17,11 @@ public class InventorySystem : MonoBehaviour
     public static void AddItem(GameObject item, Sprite image)
     {
         items.Add(item);
-        panels[items.Count - 1].GetComponent<InventoryItem>().Add(image);
+        panels[items.Count - 1].GetComponent<InventoryItem>().Add(image, items.Count - 1);
+    }
+
+    public static void Use(int index)
+    {
+        Destroy(items[index]);
     }
 }

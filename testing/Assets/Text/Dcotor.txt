@@ -1,0 +1,15 @@
+<stage0>
+Doctor<title>How are you feeling today?
+Doctor<title>Have you taken your medication as prescribed?
+<title>......
+<stage1>
+Doctor<title>Please take your medication.
+<title>......
+<stage2>
+Doctor<title>The patient refuses to take medication. 
+Doctor<title>EXECUTE SPECIAL TREATMENT.
+<stage3>
+Doctor<title>Very well, you seem to have taken your medication on time this time.
+Doctor<title>It appears that your condition has improved.
+<title>Thank you, Doctor. Can you tell me approximately how much longer I'll need to stay in the hospital? I feel like I'm already better.
+Doctor<title>Please be patient. I can't provide a specific answer on how much longer it will take at this moment...
